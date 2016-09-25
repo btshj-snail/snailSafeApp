@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.snail.snailSafe"
-    android:versionCode="0"
-    android:versionName="1.0"
+    android:versionCode="2"
+    android:versionName="2.0"
     >
 <!--
 第一位：重大版本更新
@@ -13,6 +13,8 @@
         android:minSdkVersion="8"
         android:targetSdkVersion="17"
     />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGET" />
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_log"
@@ -20,7 +22,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
-        <activity android:name=".activity.StartAppActivity">
+        <activity android:name=".activity.frame.StartAppActivity">
 
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -28,6 +30,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <activity android:name=".activity.frame.HomeActivity"/>
     </application>
 
 </manifest>

@@ -14,6 +14,7 @@ import android.util.Log;
 
 public class LogcatUtils {
     private static final boolean IS_OPEN_LOG = true;
+    private static final String DEFAULT_STR = "*************************************************************************************************************************************/n";
     private String targetClass;
 
     private LogcatUtils(Class clazz){
@@ -27,55 +28,55 @@ public class LogcatUtils {
 
     public void e(String message){
         if(IS_OPEN_LOG){
-            Log.e(targetClass,message);
+            Log.e(targetClass,DEFAULT_STR+message);
         }
 
     }
     public void e(String tag ,String message){
         if(IS_OPEN_LOG) {
-            Log.e(tag, message);
+            Log.e(tag, DEFAULT_STR+message);
         }
     }
 
     public void w(String message){
         if(IS_OPEN_LOG) {
-            Log.w(targetClass, message);
+            Log.w(targetClass,DEFAULT_STR+ message);
         }
     }
     public void w(String tag ,String message){
-        Log.w(tag,message);
+        Log.w(tag,DEFAULT_STR+message);
     }
 
     public void i(String message){
         if(IS_OPEN_LOG) {
-            Log.i(targetClass, message);
+            Log.i(targetClass, DEFAULT_STR+message);
         }
     }
     public void i(String tag ,String message){
         if(IS_OPEN_LOG) {
-            Log.i(tag, message);
+            Log.i(tag,DEFAULT_STR+ message);
         }
     }
 
     public void d(String message){
         if(IS_OPEN_LOG) {
-            Log.d(targetClass, message);
+            Log.d(targetClass, DEFAULT_STR+message);
         }
     }
     public void d(String tag ,String message){
         if(IS_OPEN_LOG) {
-            Log.d(tag, message);
+            Log.d(tag, DEFAULT_STR+message);
         }
     }
 
     public void v(String message){
         if(IS_OPEN_LOG) {
-            Log.v(targetClass, message);
+            Log.v(targetClass,DEFAULT_STR+ message);
         }
     }
     public void v(String tag ,String message){
         if(IS_OPEN_LOG) {
-            Log.v(tag, message);
+            Log.v(tag, DEFAULT_STR+message);
         }
     }
 }
