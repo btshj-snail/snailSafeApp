@@ -32,6 +32,7 @@
         </activity>
 
         <activity android:name=".activity.frame.HomeActivity"/>
+        <activity android:name=".activity.mobileLost.MobileLostActivity"/>
     </application>
 
 </manifest>

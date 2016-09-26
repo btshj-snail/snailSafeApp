@@ -3,8 +3,38 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
     <TextView
-        android:layout_height="wrap_content"
-        android:layout_width="wrap_content"
-        android:text="主界面"
+        android:text="@string/title_bar_fun_list"
+        style="@style/TitleBarStyle"/>
+    <com.snail.snailSafe.view.FocusTextView
+        android:textSize="16sp"
+        android:text="@string/test_desc"
+        android:textColor="#000"
+        android:layout_height="40dp"
+        android:layout_width="match_parent"
+        android:singleLine="true"
+        android:marqueeRepeatLimit="marquee_forever"
+        android:ellipsize="marquee"
+        android:padding="10dp"
+
         />
+    <View
+        android:layout_height="1dp"
+        android:layout_width="match_parent"
+        android:background="@color/gray"
+        android:backgroundTint="@color/blue"
+
+        />
+    <GridView
+        android:layout_marginTop="20dp"
+        android:verticalSpacing="15dp"
+        android:id="@+id/gv_home"
+        android:numColumns="3"
+        android:minHeight="100dp"
+        android:stretchMode="columnWidth"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+
+
+        />
+
 </LinearLayout>
