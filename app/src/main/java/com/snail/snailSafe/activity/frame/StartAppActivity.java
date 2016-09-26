@@ -36,13 +36,17 @@ import java.net.URL;
 
 public class StartAppActivity extends AppCompatActivity {
 
- 
+
+
     private LogcatUtils logcatUtils = LogcatUtils.getLogCat(StartAppActivity.class);
     private Context mContext;
 
     private static final int ENTER_HOME = 100;
     private static final int SYS_EXCEPTION = 101;
     private static final int UPDATE_VERSION = 102;
+    private static final int URL_EXCEPTION = 103;
+    private static final int IO_EXCEPTION = 104;
+    private static final int JSON_CONVERT_EXCEPTION = 105;
     private static final String URL_VERSION_INFO = "updateVersionInfo.json";
 
 
@@ -51,6 +55,7 @@ public class StartAppActivity extends AppCompatActivity {
 
     private String mVersionDesc = "";
     private String mDownloadUrl = "";
+    private File mDownloadApkFile = null;
 
 
     private final Handler mHandler = new Handler(){
@@ -59,6 +64,7 @@ public class StartAppActivity extends AppCompatActivity {
             switch(msg.what){
                 case UPDATE_VERSION:
                     showUpdateVersionDialog();
+                    break;
                 case ENTER_HOME:
                     //进入home界面
                     skipPage_home();
@@ -68,10 +74,23 @@ public class StartAppActivity extends AppCompatActivity {
                     exceptionTip();
                     skipPage_home();
                     break;
+                case URL_EXCEPTION:
+                    Toast.makeText(mContext,"URL 异常，检查URL路径",Toast.LENGTH_SHORT).show();
+                    break;
+                case IO_EXCEPTION:
+                    Toast.makeText(mContext,"IO 异常，读取文件失败",Toast.LENGTH_SHORT).show();
+                    break;
+                case JSON_CONVERT_EXCEPTION:
+                    Toast.makeText(mContext,"JSON 异常，数据转换失败",Toast.LENGTH_SHORT).show();
+                    break;
+
             }
         }
     };
 
+    /**
+     * 打开是否更新对话框
+     */
     private void showUpdateVersionDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
         builder.setIcon(R.drawable.tip);
@@ -81,7 +100,6 @@ public class StartAppActivity extends AppCompatActivity {
 
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                //todo 立即更新
                 downloadApk();
             }
         });
@@ -91,6 +109,7 @@ public class StartAppActivity extends AppCompatActivity {
                 skipPage_home();
             }
         });
+        //用户直接点击返回键 取消安装的情况
         builder.setOnCancelListener(new DialogInterface.OnCancelListener() {
             @Override
             public void onCancel(DialogInterface dialog) {
@@ -101,26 +120,44 @@ public class StartAppActivity extends AppCompatActivity {
         builder.show();
     }
 
+    /**
+     * 下载apk
+     * 注意一定要是snailMobileSafe.apk这个名字
+     * 通过Environment获取sdk的状态。如果没有sdk卡，则保存在应用私有数据文件中
+     */
     private void downloadApk() {
+        String path_prefix = "";
+        String path;
         if(Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)){
-            String path = Environment.getExternalStorageDirectory().getAbsolutePath()+File.separator+"snailMobileSafe.apk";
-            HttpUtils httpUtils = new HttpUtils();
-            httpUtils.download(mDownloadUrl, path, new RequestCallBack<File>() {
-                @Override
-                public void onSuccess(ResponseInfo<File> responseInfo) {
-                    //todo 执行apk包
-                    File file = responseInfo.result;
-                    installApk(file);
-                }
-
-                @Override
-                public void onFailure(HttpException e, String s) {
-                    logcatUtils.e("下载失败");
-                }
-            });
+            path_prefix = Environment.getExternalStorageDirectory().getAbsolutePath();
+        }else{
+            path_prefix = mContext.getFilesDir().getAbsolutePath();
         }
+        path = path_prefix+File.separator+"snailMobileSafe.apk";
+        HttpUtils httpUtils = new HttpUtils();
+        httpUtils.download(mDownloadUrl, path, new RequestCallBack<File>() {
+            @Override
+            public void onSuccess(ResponseInfo<File> responseInfo) {
+                //todo 执行apk包
+                mDownloadApkFile = responseInfo.result;
+                installApk(mDownloadApkFile);
+
+            }
+
+            @Override
+            public void onFailure(HttpException e, String s) {
+                logcatUtils.e("下载失败 "+e.getMessage());
+                Toast.makeText(mContext,"下载apk失败，请下次再试。",Toast.LENGTH_SHORT).show();
+                skipPage_home();
+            }
+        });
     }
 
+    /**
+     * 安装apk
+     * 利用系统提供的统一安装界面实现。
+     * @param file
+     */
     private void installApk(File file) {
         Intent intent = new Intent();
         intent.setAction("android.intent.action.VIEW");
@@ -133,6 +170,9 @@ public class StartAppActivity extends AppCompatActivity {
         Toast.makeText(mContext,"系统异常",Toast.LENGTH_LONG).show();
     }
 
+    /**
+     * 跳转下一个home界面，并且关闭首页
+     */
     private void skipPage_home() {
         Intent intent = new Intent(this,HomeActivity.class);
         startActivity(intent);
@@ -152,6 +192,9 @@ public class StartAppActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode , int resultCode , Intent data){
         super.onActivityResult(requestCode,resultCode,data);
+        if(mDownloadApkFile!=null){
+            mDownloadApkFile.deleteOnExit();
+        }
         skipPage_home();
     }
 
@@ -167,7 +210,7 @@ public class StartAppActivity extends AppCompatActivity {
 
 
     /**
-     * 界面跳转
+     * 检测版本信息
      */
     private void checkVersion() {
         //新开一个线程处理业务逻辑
@@ -184,9 +227,9 @@ public class StartAppActivity extends AppCompatActivity {
 
                     HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
                     //请求超时
-                    httpURLConnection.setConnectTimeout(2000);
+                    httpURLConnection.setConnectTimeout(4000);
                     //读取超时
-                    httpURLConnection.setReadTimeout(2000);
+                    httpURLConnection.setReadTimeout(4000);
 
                        InputStream in =  httpURLConnection.getInputStream();
                         String jsonString = StreamUtils.stream2String(in);
@@ -201,10 +244,13 @@ public class StartAppActivity extends AppCompatActivity {
                     }
                 } catch (MalformedURLException e) {
                     e.printStackTrace();
+                    message.what = URL_EXCEPTION;
                 } catch (IOException e) {
                     e.printStackTrace();
+                    message.what = IO_EXCEPTION;
                 } catch (JSONException e) {
                     e.printStackTrace();
+                    message.what = JSON_CONVERT_EXCEPTION;
                 }
 
                 long endTime = System.currentTimeMillis();
@@ -237,6 +283,7 @@ public class StartAppActivity extends AppCompatActivity {
         PackageManager pm = getPackageManager();
         try {
             PackageInfo packageInfo = pm.getPackageInfo(getPackageName(), 0);
+            Toast.makeText(mContext,"versionName"+packageInfo.versionName,Toast.LENGTH_LONG);
             return packageInfo.versionName;
         } catch (PackageManager.NameNotFoundException e) {
             e.printStackTrace();
