@@ -21,6 +21,8 @@ import com.lidroid.xutils.http.ResponseInfo;
 import com.lidroid.xutils.http.callback.RequestCallBack;
 import com.snail.snailSafe.R;
 import com.snail.snailSafe.constant.Constant;
+import com.snail.snailSafe.sharedPerfences.CustomerSPO;
+import com.snail.snailSafe.sharedPerfences.SettingSPO;
 import com.snail.snailSafe.utils.LogcatUtils;
 import com.snail.snailSafe.utils.StreamUtils;
 
@@ -40,6 +42,8 @@ public class StartAppActivity extends AppCompatActivity {
 
     private LogcatUtils logcatUtils = LogcatUtils.getLogCat(StartAppActivity.class);
     private Context mContext;
+    private SettingSPO settingSPO;
+    private CustomerSPO customerSPO;
 
     private static final int ENTER_HOME = 100;
     private static final int SYS_EXCEPTION = 101;
@@ -47,6 +51,7 @@ public class StartAppActivity extends AppCompatActivity {
     private static final int URL_EXCEPTION = 103;
     private static final int IO_EXCEPTION = 104;
     private static final int JSON_CONVERT_EXCEPTION = 105;
+    private static final int OPEN_AUTO_UPDATE_TIP = 106;
     private static final String URL_VERSION_INFO = "updateVersionInfo.json";
 
 
@@ -76,17 +81,27 @@ public class StartAppActivity extends AppCompatActivity {
                     break;
                 case URL_EXCEPTION:
                     Toast.makeText(mContext,"URL 异常，检查URL路径",Toast.LENGTH_SHORT).show();
+                    skipPage_home();
                     break;
                 case IO_EXCEPTION:
                     Toast.makeText(mContext,"IO 异常，读取文件失败",Toast.LENGTH_SHORT).show();
+                    skipPage_home();
                     break;
                 case JSON_CONVERT_EXCEPTION:
                     Toast.makeText(mContext,"JSON 异常，数据转换失败",Toast.LENGTH_SHORT).show();
+                    skipPage_home();
+                    break;
+                case OPEN_AUTO_UPDATE_TIP:
+                    if(customerSPO.getInt(Constant.ASK_APP_COUNT,0)<=1){
+                        Toast.makeText(mContext,"您可以在系统设置中设置自动更新，以获得更好的体验",Toast.LENGTH_SHORT).show();
+                    }
+                    skipPage_home();
                     break;
 
             }
         }
     };
+
 
     /**
      * 打开是否更新对话框
@@ -184,6 +199,10 @@ public class StartAppActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         mContext = StartAppActivity.this;
         setContentView(R.layout.activity_start_app);
+        settingSPO = new SettingSPO(mContext);
+        customerSPO = new CustomerSPO(mContext);
+        int count = customerSPO.getInt(Constant.ASK_APP_COUNT,0)+1;
+        customerSPO.putInt(Constant.ASK_APP_COUNT,count++);
         initView();
         initData();
 
@@ -200,8 +219,8 @@ public class StartAppActivity extends AppCompatActivity {
 
     private void initData() {
         tv_versionName.setText("版本：" + obtainVersionName());
-        //检测版本
         checkVersion();
+
     }
 
     private void initView() {
@@ -220,47 +239,53 @@ public class StartAppActivity extends AppCompatActivity {
                 boolean updateFlag = false;
                 Message message = Message.obtain();
                 long startTime = System.currentTimeMillis();
-                //获取服务器最新版本信息
-                try {
+                //获取是否自动更新配置
+                boolean isAutoUpdate = settingSPO.getBoolean(Constant.IS_AUTO_UPDATE,false);
+                if(isAutoUpdate){
+                    //获取服务器最新版本信息
+                    try {
 
-                    URL url = new URL(Constant.SERVER_ADDRESS+ File.separator+URL_VERSION_INFO);
+                        URL url = new URL(Constant.SERVER_ADDRESS+ File.separator+URL_VERSION_INFO);
 
-                    HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
-                    //请求超时
-                    httpURLConnection.setConnectTimeout(4000);
-                    //读取超时
-                    httpURLConnection.setReadTimeout(4000);
+                        HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
+                        //请求超时
+                        httpURLConnection.setConnectTimeout(4000);
+                        //读取超时
+                        httpURLConnection.setReadTimeout(4000);
 
-                       InputStream in =  httpURLConnection.getInputStream();
+                        InputStream in =  httpURLConnection.getInputStream();
                         String jsonString = StreamUtils.stream2String(in);
-                       JSONObject json =  new JSONObject(jsonString);
-                       int versionCode = json.getInt("versionCode");
+                        JSONObject json =  new JSONObject(jsonString);
+                        int versionCode = json.getInt("versionCode");
                         mVersionDesc = json.getString("versionDesc");
                         mDownloadUrl = json.getString("downloadUrl");
 
-                    if(versionCode>obtainVersionCode()){
-                        updateFlag = true;
-                        message.what = UPDATE_VERSION;
+                        if(versionCode>obtainVersionCode()){
+                            updateFlag = true;
+                            message.what = UPDATE_VERSION;
+                        }
+                    } catch (MalformedURLException e) {
+                        e.printStackTrace();
+                        message.what = URL_EXCEPTION;
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                        message.what = IO_EXCEPTION;
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                        message.what = JSON_CONVERT_EXCEPTION;
                     }
-                } catch (MalformedURLException e) {
-                    e.printStackTrace();
-                    message.what = URL_EXCEPTION;
-                } catch (IOException e) {
-                    e.printStackTrace();
-                    message.what = IO_EXCEPTION;
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                    message.what = JSON_CONVERT_EXCEPTION;
+                }else{
+                   message.what = OPEN_AUTO_UPDATE_TIP;
                 }
 
                 long endTime = System.currentTimeMillis();
-                if (endTime - startTime < 4000) {
                     try {
-                        Thread.sleep(4000 - (endTime - startTime));
-                        if(!updateFlag){
-                            message.what = ENTER_HOME;
+                        if (endTime - startTime < 2000) {
+                            Thread.sleep(2000 - (endTime - startTime));
+                            if (!updateFlag && message.what < 100) {
+                                message.what = ENTER_HOME;
+                            }
                         }
-                       
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                         message.what = SYS_EXCEPTION;
@@ -268,7 +293,6 @@ public class StartAppActivity extends AppCompatActivity {
                         mHandler.sendMessage(message);
                     }
                 }
-            }
         });
         thread.start();
 

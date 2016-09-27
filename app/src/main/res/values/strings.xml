@@ -3,4 +3,10 @@
     <string name="app_name">蜗牛卫士</string>
     <string name="title_bar_fun_list">功能列表</string>
     <string name="test_desc">夏天夏天悄悄过去，留下小秘密，蜗牛卫士正式开发，啊啊啊啊啊啊啊啊啊啊啊啊</string>
+    <string name="set_psd_text">设置密码</string>
+    <string name="input_psd_text">请输入密码</string>
+    <string name="input_confirm_psd_text">请输入上方输入的密码</string>
+    <string name="btn_cancel_text">取消</string>
+    <string name="btn_confirm_text">确认</string>
+    <string name="write_psd_text">输入密码</string>
 </resources>

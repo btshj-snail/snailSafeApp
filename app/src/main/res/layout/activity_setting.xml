@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:custom="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+    <com.snail.snailSafe.view.SettingItemView
+        android:id="@+id/siv_update"
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        custom:descTitle="系统自动更新设置"
+        custom:descOn="自动更新已开启"
+        custom:descOff="自动更新已关闭"
+        />
+
+    <com.snail.snailSafe.view.SettingItemView
+        android:id="@+id/siv_tel_num_address"
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        custom:descTitle="电话归属地的显示设置"
+        custom:descOn="电话归属地显示已开启"
+        custom:descOff="电话归属地显示已关闭"
+        />
+</LinearLayout>

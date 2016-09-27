@@ -9,6 +9,11 @@ import android.app.Activity;
 public class SystemModule {
 
     /**
+     * 模块id
+     */
+    private int id;
+
+    /**
      * 模块名称
      */
     private String moduleTitle;
@@ -32,6 +37,21 @@ public class SystemModule {
     public SystemModule(String moduleTitle, int moduleIcon) {
         this.moduleTitle = moduleTitle;
         this.moduleIcon = moduleIcon;
+    }
+
+    public SystemModule(int id, String moduleTitle, int moduleIcon, Class moduleInitActivity) {
+        this.id = id;
+        this.moduleTitle = moduleTitle;
+        this.moduleIcon = moduleIcon;
+        this.moduleInitActivity = moduleInitActivity;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getModuleTitle() {

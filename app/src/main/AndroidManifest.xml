@@ -30,9 +30,12 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
+        <!-- 主页 -->
         <activity android:name=".activity.frame.HomeActivity"/>
+        <!-- 手机防盗 -->
         <activity android:name=".activity.mobileLost.MobileLostActivity"/>
+        <!-- 系统设置 -->
+        <activity android:name=".activity.systemSetting.SystemSettingActivity" />
     </application>
 
 </manifest>
