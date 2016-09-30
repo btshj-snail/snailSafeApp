@@ -56,4 +56,5 @@ public class Constant {
     public static final String COMPLETE_SET = "completeSet";
     public static final String SIM_CODE = "simCode";
     public static final String SAFE_TEL_NUM = "safeTelNum";
+    public static final String IS_OPEN_LOST_MOBILE = "isOpenMobileLostFun";
 }

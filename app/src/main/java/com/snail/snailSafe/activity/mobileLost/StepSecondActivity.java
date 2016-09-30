@@ -21,7 +21,7 @@ import com.snail.snailSafe.utils.LogcatUtils;
  * Created by snail on 2016/9/28.
  */
 
-public class StepSecondActivity extends AppCompatActivity {
+public class StepSecondActivity extends BaseStepActivity {
     private LogcatUtils logcatUtils = LogcatUtils.getLogCat(StepSecondActivity.class);
     private Context mContext;
     private Button btn_nextPage;
@@ -39,6 +39,8 @@ public class StepSecondActivity extends AppCompatActivity {
         initUI();
     }
 
+
+
     private void initUI() {
         btn_nextPage = (Button) findViewById(R.id.btn_nextPage);
         btn_prevPage = (Button) findViewById(R.id.btn_prevPage);
@@ -48,8 +50,7 @@ public class StepSecondActivity extends AppCompatActivity {
         btn_prevPage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent  = new Intent(mContext,StepOneActivity.class);
-                startActivity(intent);
+                prevPage();
             }
         });
 
@@ -58,16 +59,7 @@ public class StepSecondActivity extends AppCompatActivity {
         btn_nextPage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String telNum = String.valueOf(ed_contact.getText());
-                if(TextUtils.isEmpty(telNum)){
-                    Toast.makeText(mContext,"请选择安全号码",Toast.LENGTH_SHORT).show();
-                }else{
-                    //写入文件
-                    mobileLostSPO.putString(Constant.SAFE_TEL_NUM,telNum);
-                    //跳转下一个界面
-                    Intent intent  = new Intent(mContext,StepThirdActivity.class);
-                    startActivity(intent);
-                }
+                nextPage();
             }
         });
 
@@ -88,6 +80,26 @@ public class StepSecondActivity extends AppCompatActivity {
             ed_contact.setText(choseTelNum);
         }
         super.onActivityResult(requestCode, resultCode, data);
+    }
+
+    @Override
+    public void prevPage() {
+        Intent intent  = new Intent(mContext,StepOneActivity.class);
+        startActivity(intent);
+    }
+
+    @Override
+    public void nextPage() {
+        String telNum = String.valueOf(ed_contact.getText());
+        if(TextUtils.isEmpty(telNum)){
+            Toast.makeText(mContext,"请选择安全号码",Toast.LENGTH_SHORT).show();
+        }else{
+            //写入文件
+            mobileLostSPO.putString(Constant.SAFE_TEL_NUM,telNum);
+            //跳转下一个界面
+            Intent intent  = new Intent(mContext,StepThirdActivity.class);
+            startActivity(intent);
+        }
     }
 }
 

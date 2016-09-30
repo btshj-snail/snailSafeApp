@@ -21,7 +21,7 @@ import com.snail.snailSafe.view.SettingItemView;
  * Created by snail on 2016/9/28.
  */
 
-public class StepOneActivity extends AppCompatActivity {
+public class StepOneActivity extends BaseStepActivity {
     private LogcatUtils logcatUtils = LogcatUtils.getLogCat(StepOneActivity.class);
     private Context mContext;
     private SettingItemView siv_bindSim;
@@ -37,6 +37,9 @@ public class StepOneActivity extends AppCompatActivity {
         initUI();
         initData();
     }
+
+
+
     private void initUI() {
         siv_bindSim = (SettingItemView) findViewById(R.id.siv_bindSim);
         btn_next = (Button) findViewById(R.id.btn_nextPage);
@@ -58,14 +61,7 @@ public class StepOneActivity extends AppCompatActivity {
         btn_next.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String simCode = mobileLostSPO.getString(Constant.SIM_CODE, "");
-                if(TextUtils.isEmpty(simCode)){
-                    Toast.makeText(mContext,"请绑定SIM卡",Toast.LENGTH_SHORT).show();
-                }else{
-                    Intent intent = new Intent(mContext,StepSecondActivity.class);
-                    startActivity(intent);
-                    finish();
-                }
+                nextPage();
             }
         });
     }
@@ -73,5 +69,23 @@ public class StepOneActivity extends AppCompatActivity {
     private void initData() {
         boolean isHasSimCode = TextUtils.isEmpty(mobileLostSPO.getString(Constant.SIM_CODE,""))?false:true;
         siv_bindSim.setChecked(isHasSimCode);
+    }
+
+
+    @Override
+    public void prevPage() {
+
+    }
+
+    @Override
+    public void nextPage() {
+        String simCode = mobileLostSPO.getString(Constant.SIM_CODE, "");
+        if(TextUtils.isEmpty(simCode)){
+            Toast.makeText(mContext,"请绑定SIM卡",Toast.LENGTH_SHORT).show();
+        }else{
+            Intent intent = new Intent(mContext,StepSecondActivity.class);
+            startActivity(intent);
+            finish();
+        }
     }
 }

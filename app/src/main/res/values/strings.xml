@@ -13,4 +13,5 @@
     <string name="bindingSimTip">亲，如果您绑定了SIM卡：</string>
     <string name="warmPrompt">温馨提示：</string>
     <string name="set_safe_mobile_text">设置安全号码</string>
+    <string name="open_mobile_lost_text">开启手机防盗</string>
 </resources>
