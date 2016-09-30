@@ -9,4 +9,8 @@
     <string name="btn_cancel_text">取消</string>
     <string name="btn_confirm_text">确认</string>
     <string name="write_psd_text">输入密码</string>
+    <string name="step_one_text">第一步：绑定手机卡</string>
+    <string name="bindingSimTip">亲，如果您绑定了SIM卡：</string>
+    <string name="warmPrompt">温馨提示：</string>
+    <string name="set_safe_mobile_text">设置安全号码</string>
 </resources>

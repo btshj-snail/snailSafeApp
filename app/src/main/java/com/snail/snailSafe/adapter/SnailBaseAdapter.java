@@ -14,11 +14,11 @@ import java.util.List;
 public abstract class SnailBaseAdapter<T> extends BaseAdapter {
 
     private List<T> data;
-    private Context mContext;
+    private Context context;
 
     public SnailBaseAdapter(Context mContext, List<T> data) {
         this.data = data;
-        this.mContext = mContext;
+        this.context = mContext;
     }
 
     public List<T> getData() {
@@ -29,12 +29,12 @@ public abstract class SnailBaseAdapter<T> extends BaseAdapter {
         this.data = data;
     }
 
-    public Context getmContext() {
-        return mContext;
+    public Context getContext() {
+        return context;
     }
 
-    public void setmContext(Context mContext) {
-        this.mContext = mContext;
+    public void setContext(Context context) {
+        this.context = context;
     }
 
     @Override

@@ -25,10 +25,6 @@ public class SharedPreferencesOperate {
         return fileName;
     }
 
-    public void setFileName(String fileName) {
-        this.fileName = fileName;
-    }
-
     public SharedPreferencesOperate(Context ctx, String fileName) {
         this.context = ctx;
         this.fileName = fileName;
@@ -113,5 +109,15 @@ public class SharedPreferencesOperate {
         if (sharedPreferences == null)
             sharedPreferences = this.getContext().getSharedPreferences(this.getFileName(), Context.MODE_PRIVATE);
         return sharedPreferences.getString(key, defaultValue);
+    }
+
+    /**
+     * 移除条目
+     * @param key
+     */
+    public void remove(String key) {
+        if (sharedPreferences == null)
+            sharedPreferences = this.getContext().getSharedPreferences(this.getFileName(), Context.MODE_PRIVATE);
+        sharedPreferences.edit().remove(key).commit();
     }
 }

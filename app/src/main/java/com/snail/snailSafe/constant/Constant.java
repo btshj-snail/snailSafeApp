@@ -42,4 +42,18 @@ public class Constant {
     public static final String ASK_APP_COUNT = "askAppCount";
 
     public static final String MOBILE_LOST_PSD = "mobileLostPsd";
+
+
+
+    /**
+     * =====================================================================================================================================================
+     *
+     * 手机防盗sharedPreference 对应字段
+     *
+     *  =====================================================================================================================================================
+     */
+
+    public static final String COMPLETE_SET = "completeSet";
+    public static final String SIM_CODE = "simCode";
+    public static final String SAFE_TEL_NUM = "safeTelNum";
 }

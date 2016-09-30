@@ -75,4 +75,8 @@ public class SettingItemView extends RelativeLayout {
         checkBox.setChecked(checked);
     }
 
+    @Override
+    public boolean isInEditMode() {
+        return super.isInEditMode();
+    }
 }

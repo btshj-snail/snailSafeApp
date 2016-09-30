@@ -15,6 +15,8 @@
     />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.READ_CONTACTS" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_log"
@@ -30,10 +32,14 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <!-- 主页 -->
+        <!-- 系统界面 -->
         <activity android:name=".activity.frame.HomeActivity"/>
+        <activity android:name=".activity.frame.ChoseContactActivity"/>
         <!-- 手机防盗 -->
         <activity android:name=".activity.mobileLost.MobileLostActivity"/>
+        <activity android:name=".activity.mobileLost.StepOneActivity"/>
+        <activity android:name=".activity.mobileLost.StepSecondActivity"/>
+        <activity android:name=".activity.mobileLost.StepThirdActivity"/>
         <!-- 系统设置 -->
         <activity android:name=".activity.systemSetting.SystemSettingActivity" />
     </application>

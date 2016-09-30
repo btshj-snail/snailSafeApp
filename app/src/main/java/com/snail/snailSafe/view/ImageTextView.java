@@ -113,4 +113,8 @@ public class ImageTextView extends TextView {
         return Bitmap.createBitmap(bm, 0, 0, width, height, matrix, true);
     }
 
+    @Override
+    public boolean isInEditMode() {
+        return super.isInEditMode();
+    }
 }
