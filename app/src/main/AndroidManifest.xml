@@ -40,6 +40,12 @@
         <activity android:name=".activity.mobileLost.StepOneActivity"/>
         <activity android:name=".activity.mobileLost.StepSecondActivity"/>
         <activity android:name=".activity.mobileLost.StepThirdActivity"/>
+        <activity android:name=".activity.mobileLost.FunctionIntroduceActivity"/>
+        <activity android:name=".activity.mobileLost.ChangeSecretKeyActivity"/>
+        <activity android:name=".activity.mobileLost.Introduce_HowDelConstantActivity"/>
+        <activity android:name=".activity.mobileLost.Introduce_HowDelPictureActivity"/>
+        <activity android:name=".activity.mobileLost.Introduce_HowGetPositionActivity"/>
+        <activity android:name=".activity.mobileLost.Introduce_HowObtainStatusActivity"/>
         <!-- 系统设置 -->
         <activity android:name=".activity.systemSetting.SystemSettingActivity" />
     </application>

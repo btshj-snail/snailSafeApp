@@ -6,6 +6,10 @@
         <attr name="descOff" format="string"/>
     </declare-styleable>
 
+    <declare-styleable name="ItemSettingArrowView">
+        <attr name="descContent" format="string"/>
+    </declare-styleable>
+
     <declare-styleable name="ImageTextView">
         <attr name="drawable_src" format="reference"/>
         <attr name="drawable_height" format="dimension"/>

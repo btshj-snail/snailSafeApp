@@ -36,8 +36,8 @@ public class StepThirdActivity extends BaseStepActivity {
 
     private void initData() {
         mobileLostSPO = new MobileLostSPO(mContext);
-        mobileLostSPO.getBoolean(Constant.IS_OPEN_LOST_MOBILE,false);
-
+        boolean b = mobileLostSPO.getBoolean(Constant.IS_OPEN_LOST_MOBILE,false);
+        siv_open_lost_mobile.setChecked(b);
     }
 
     private void initUI() {
@@ -65,7 +65,8 @@ public class StepThirdActivity extends BaseStepActivity {
             @Override
             public void onClick(View v) {
                 boolean checked = siv_open_lost_mobile.isChecked();
-                    siv_open_lost_mobile.setChecked(checked);
+                    siv_open_lost_mobile.setChecked(!checked);
+                mobileLostSPO.putBoolean(Constant.IS_OPEN_LOST_MOBILE,!checked);
             }
         });
     }
@@ -81,6 +82,7 @@ public class StepThirdActivity extends BaseStepActivity {
         if(mobileLostSPO.getBoolean(Constant.IS_OPEN_LOST_MOBILE,false)){
             Intent intent = new Intent(mContext,MobileLostActivity.class);
             startActivity(intent);
+            finish();
         }else {
             Toast.makeText(mContext,"请勾选开启手机防盗功能",Toast.LENGTH_SHORT).show();
         }

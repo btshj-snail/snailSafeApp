@@ -1,11 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:customer = "http://schemas.android.com/apk/res-auto"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
 
     <TextView
+        style="@style/TitleBarStyle"
         android:layout_height="wrap_content"
-        android:layout_width="wrap_content"
-        android:text="手机防盗界面"
+        android:layout_width="match_parent"
+        android:text="手机防盗"
+        />
+
+    <com.snail.snailSafe.view.SettingItemArrowView
+        android:id="@+id/restConfigInfo"
+        android:layout_height="80dp"
+        android:layout_width="match_parent"
+        customer:descContent="重置设置信息"
+        />
+
+    <com.snail.snailSafe.view.SettingItemArrowView
+        android:id="@+id/changeSecretKey"
+        android:layout_height="80dp"
+        android:layout_width="match_parent"
+        customer:descContent="更改密钥"
+        />
+
+    <com.snail.snailSafe.view.SettingItemArrowView
+        android:id="@+id/changeSafeConstant"
+        android:layout_height="80dp"
+        android:layout_width="match_parent"
+        customer:descContent="更改安全联系人"
+        />
+    <com.snail.snailSafe.view.SettingItemArrowView
+        android:id="@+id/howUseMobileLostFunction"
+        android:layout_height="80dp"
+        android:layout_width="match_parent"
+        customer:descContent="如何使用手机防盗功能"
         />
 </LinearLayout>

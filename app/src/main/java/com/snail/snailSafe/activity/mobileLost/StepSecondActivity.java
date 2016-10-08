@@ -37,8 +37,12 @@ public class StepSecondActivity extends BaseStepActivity {
         mobileLostSPO = new MobileLostSPO(mContext);
         setContentView(R.layout.activity_step_second);
         initUI();
+        initData();
     }
 
+    private void initData() {
+        ed_contact.setText(mobileLostSPO.getString(Constant.SAFE_TEL_NUM,""));
+    }
 
 
     private void initUI() {
@@ -99,6 +103,7 @@ public class StepSecondActivity extends BaseStepActivity {
             //跳转下一个界面
             Intent intent  = new Intent(mContext,StepThirdActivity.class);
             startActivity(intent);
+            finish();
         }
     }
 }

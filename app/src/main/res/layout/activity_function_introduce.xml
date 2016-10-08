@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+<TextView
+    style="@style/TitleBarStyle"
+    android:text="功能说明"
+    />
+
+    <TextView
+        android:id="@+id/tv_fun_desc_center"
+        android:layout_height="150dp"
+        android:layout_width="150dp"
+        android:text="How use ?"
+        android:background="@drawable/selector_area_circle_blue"
+        android:textColor="@color/white"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:layout_centerInParent="true"
+        android:gravity="center"
+        />
+
+    <TextView
+        android:id="@+id/tv_how_get_position"
+        style="@style/FunDescCircle"
+        android:background="@drawable/selector_area_circle_purple"
+        android:layout_above="@id/tv_fun_desc_center"
+        android:layout_marginBottom="5dp"
+        android:layout_marginLeft="20dp"
+        android:layout_alignParentLeft="true"
+        android:text="如何获取位置?"
+        />
+
+    <TextView
+        android:id="@+id/tv_how_del_picture"
+        style="@style/FunDescCircle"
+        android:background="@drawable/selector_area_circle_green"
+        android:layout_above="@id/tv_fun_desc_center"
+        android:layout_marginBottom="5dp"
+        android:layout_marginRight="20dp"
+        android:layout_alignParentRight="true"
+        android:text="如何远程删除照片?"
+        />
+    <TextView
+        android:id="@+id/tv_how_del_constant"
+        style="@style/FunDescCircle"
+        android:background="@drawable/selector_area_circle_orange"
+        android:layout_below="@id/tv_fun_desc_center"
+        android:layout_marginTop="5dp"
+        android:layout_marginLeft="20dp"
+        android:layout_alignParentLeft="true"
+        android:text="如何远程删除通信录?"
+        />
+
+    <TextView
+        android:id="@+id/tv_how_obtain_status"
+        style="@style/FunDescCircle"
+        android:background="@drawable/selector_area_circle_red"
+        android:layout_below="@id/tv_fun_desc_center"
+        android:layout_marginTop="5dp"
+        android:layout_marginRight="20dp"
+        android:layout_alignParentRight="true"
+        android:text="如何远程获取手机状态?"
+        />
+</RelativeLayout>

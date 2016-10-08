@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:custom="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+    <com.snail.snailSafe.view.ImageTextView
+        android:id="@+id/dialogConfirmTitle"
+        custom:drawable_src="@drawable/tip"
+        custom:drawable_width="30dp"
+        custom:drawable_height="30dp"
+        custom:drawable_location="left"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        style="@style/TitleBarStyle"
+        android:background="@color/lightcoral"
+        />
+
+    <TextView
+        android:id="@+id/dialogConfirmDesc"
+        android:layout_height="80dp"
+        android:layout_width="match_parent"
+        android:layout_gravity="center"
+        android:textSize="16sp"
+        android:gravity="center"
+        />
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        >
+
+        <Button
+            android:id="@+id/btn_cancel"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@color/gray"
+            android:text="@string/btn_cancel_text"
+            android:textColor="@color/white"
+            android:layout_marginRight="10dp"
+            />
+
+        <Button
+            android:id="@+id/btn_confirm"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:textColor="@color/white"
+            android:background="@color/colorPrimary"
+            android:text="@string/btn_confirm_text"
+            />
+
+    </LinearLayout>
+</LinearLayout>

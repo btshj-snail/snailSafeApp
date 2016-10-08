@@ -19,7 +19,7 @@ import com.snail.snailSafe.activity.systemSetting.SystemSettingActivity;
 import com.snail.snailSafe.adapter.frame.SystemModulesAdapter;
 import com.snail.snailSafe.constant.Constant;
 import com.snail.snailSafe.pojo.frame.SystemModule;
-import com.snail.snailSafe.sharedPerfences.CustomerSPO;
+import com.snail.snailSafe.sharedPerfences.MobileLostSPO;
 import com.snail.snailSafe.utils.LogcatUtils;
 import com.snail.snailSafe.utils.MD5Util;
 
@@ -34,14 +34,14 @@ public class HomeActivity extends AppCompatActivity{
     private Context mContext;
     private GridView mGridView;
     private List<SystemModule> systemModuleList;
-    private CustomerSPO customerSPO;
+    private MobileLostSPO mobileLostSPO;
 
     @Override
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         mContext = HomeActivity.this;
         setContentView(R.layout.activity_home);
-        customerSPO = new CustomerSPO(mContext);
+        mobileLostSPO = new MobileLostSPO(mContext);
         initView();
         initData();
     }
@@ -87,7 +87,7 @@ public class HomeActivity extends AppCompatActivity{
      * @param clazz  手机防盗界面的activity 字节码文件
      */
     private void doMobileLost(Class clazz) {
-        String psd = customerSPO.getString(Constant.MOBILE_LOST_PSD, "");
+        String psd = mobileLostSPO.getString(Constant.MOBILE_LOST_PSD, "");
         if(TextUtils.isEmpty(psd)){
             showSetPsdDialog(clazz);
         }else{
@@ -139,7 +139,7 @@ public class HomeActivity extends AppCompatActivity{
                     return;
                 }else{
                     // 存储密码
-                    customerSPO.putString(Constant.MOBILE_LOST_PSD,MD5Util.encoder(inputPsdText));
+                    mobileLostSPO.putString(Constant.MOBILE_LOST_PSD,MD5Util.encoder(inputPsdText));
                     //隐藏弹出框
                     alertDialog.dismiss();
                     //跳转界面
@@ -180,7 +180,7 @@ public class HomeActivity extends AppCompatActivity{
             @Override
             public void onClick(View v) {
                 //获取密码
-                String psd = customerSPO.getString(Constant.MOBILE_LOST_PSD, "");
+                String psd = mobileLostSPO.getString(Constant.MOBILE_LOST_PSD, "");
                 EditText inputPsd = (EditText) view.findViewById(R.id.et_input_psd);
                 String inputPsdText = String.valueOf(inputPsd.getText());
 
