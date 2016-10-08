@@ -1,7 +1,5 @@
 package com.snail.snailSafe.utils;
 
-import android.os.Message;
-
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
