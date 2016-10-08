@@ -46,6 +46,8 @@
         <activity android:name=".activity.mobileLost.Introduce_HowDelPictureActivity"/>
         <activity android:name=".activity.mobileLost.Introduce_HowGetPositionActivity"/>
         <activity android:name=".activity.mobileLost.Introduce_HowObtainStatusActivity"/>
+        <!--帮助他人-->
+        <activity android:name=".activity.help.HelpOtherActivity"/>
         <!-- 系统设置 -->
         <activity android:name=".activity.systemSetting.SystemSettingActivity" />
     </application>
