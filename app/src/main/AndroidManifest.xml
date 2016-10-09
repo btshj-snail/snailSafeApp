@@ -17,6 +17,9 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
     <uses-permission android:name="android.permission.READ_CONTACTS" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.SEND_SMS" /><!--发送短信 -->
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" /><!--获取位置权限 -->
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" /><!--获取位置权限 -->
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_log"
@@ -48,8 +51,30 @@
         <activity android:name=".activity.mobileLost.Introduce_HowObtainStatusActivity"/>
         <!--帮助他人-->
         <activity android:name=".activity.help.HelpOtherActivity"/>
+        <activity android:name=".activity.help.LostMobileConstantActivity"/>
+        <activity android:name=".activity.help.LostMobilePictureActivity"/>
+        <activity android:name=".activity.help.LostMobilePositionActivity"/>
+        <activity android:name=".activity.help.LostMobileStatusActivity"/>
         <!-- 系统设置 -->
         <activity android:name=".activity.systemSetting.SystemSettingActivity" />
-    </application>
 
+
+
+
+
+        <!--注册广播接收 -->
+        <!--接收短信-->
+        <receiver android:name=".broadCast.lostMobile.ObtainPositionBroadReceiver">
+            <intent-filter>
+                <action android:name="android.provider.Telephony.SMS_RECEIVED">
+                </action>
+            </intent-filter>
+        </receiver>
+
+
+
+
+
+        <service android:name=".service.mobileLost.LocationService"/>
+    </application>
 </manifest>

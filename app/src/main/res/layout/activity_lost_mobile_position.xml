@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        style="@style/TitleBarStyle"
+        android:text="获取丢失手机位置"
+        />
+    <LinearLayout
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:orientation="vertical"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:layout_marginTop="20dp"
+        >
+            <TextView
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:text="丢失手机号码："
+                android:textSize="16sp"
+                />
+
+            <EditText
+                android:id="@+id/et_lost_mobile_num"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:hint="请输入已丢失手机的号码"
+                />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:text="丢失手机的安全密钥："
+                android:textSize="16sp"
+                />
+            <EditText
+                android:id="@+id/et_lost_mobile_secret_key"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:hint="请输入丢失手机的安全密钥"
+                android:inputType="textPassword"
+                />
+        <Button
+            android:id="@+id/btn_obtain_lost_mobile_position"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:text="获取位置"
+            android:background="@color/colorPrimary"
+            android:textColor="@color/white"
+            android:textSize="16sp"
+            android:gravity="center"
+            />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+             <TextView
+                 android:id="@+id/tv_lost_mobile_show_position"
+                 android:layout_width="match_parent"
+                 android:layout_height="wrap_content"
+                 android:gravity="center"
+                 />
+
+        </LinearLayout>
+</LinearLayout>

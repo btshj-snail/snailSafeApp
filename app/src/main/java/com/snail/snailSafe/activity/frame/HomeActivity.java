@@ -14,6 +14,7 @@ import android.widget.GridView;
 import android.widget.Toast;
 
 import com.snail.snailSafe.R;
+import com.snail.snailSafe.activity.help.HelpOtherActivity;
 import com.snail.snailSafe.activity.mobileLost.MobileLostActivity;
 import com.snail.snailSafe.activity.systemSetting.SystemSettingActivity;
 import com.snail.snailSafe.adapter.frame.SystemModulesAdapter;
@@ -57,6 +58,7 @@ public class HomeActivity extends AppCompatActivity{
         systemModuleList.add(new SystemModule(7,"缓存清理",R.drawable.home_sysoptimize, MobileLostActivity.class));
         systemModuleList.add(new SystemModule(8,"高级工具",R.drawable.home_tools, MobileLostActivity.class));
         systemModuleList.add(new SystemModule(9,"设置中心",R.drawable.home_settings, SystemSettingActivity.class));
+        systemModuleList.add(new SystemModule(10,"帮助他人",R.drawable.home_safe, HelpOtherActivity.class));
 
         mGridView.setAdapter(new SystemModulesAdapter(mContext, systemModuleList) );
 

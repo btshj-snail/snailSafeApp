@@ -1,12 +1,14 @@
 package com.snail.snailSafe.activity.help;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.TextView;
 
@@ -25,6 +27,7 @@ import java.util.Map;
 public class HelpOtherActivity extends AppCompatActivity {
     private Context mContext;
     private GridView gv_help_other;
+    private HelpOtherAdapter helpOtherAdapter;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -39,28 +42,48 @@ public class HelpOtherActivity extends AppCompatActivity {
         List<Map<String,String>> list = new ArrayList<Map<String, String>>();
         Map<String,String> map1 = new HashMap<>();
         map1.put("name","获取丢失手机位置");
+        map1.put("id","1");
         list.add(map1);
 
         Map<String,String> map2 = new HashMap<>();
         map1.put("name","删除丢失手机照片");
+        map1.put("id","2");
         list.add(map2);
 
         Map<String,String> map3 = new HashMap<>();
         map1.put("name","删除丢失手机通讯录");
+        map1.put("id","3");
         list.add(map3);
 
         Map<String,String> map4 = new HashMap<>();
         map1.put("name","获取丢失手机状态");
+        map1.put("id","4");
         list.add(map4);
 
 
-        HelpOtherAdapter helpOtherAdapter = new HelpOtherAdapter(mContext,list);
+        helpOtherAdapter = new HelpOtherAdapter(mContext,list);
         gv_help_other.setAdapter(helpOtherAdapter);
     }
 
     private void initUI() {
         gv_help_other = (GridView) findViewById(R.id.gv_help_other);
+        gv_help_other.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Map<String,String> map = helpOtherAdapter.getItem(position);
+                switch(map.get("id")){
+                    case "1" : skipPage(LostMobilePositionActivity.class);break;
+                    case "2" : skipPage(LostMobilePictureActivity.class);break;
+                    case "3" : skipPage(LostMobileConstantActivity.class);break;
+                    case "4" : skipPage(LostMobileStatusActivity.class);break;
+                }
+            }
+        });
+    }
 
+    private void skipPage(Class clazz){
+        Intent intent = new Intent(mContext,clazz);
+        startActivity(intent);
     }
 
 
